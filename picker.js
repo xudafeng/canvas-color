@@ -26,13 +26,21 @@
     this.init();
   }
 
+  function getBase64(img) {
+    var canvas = document.createElement('canvas'); 
+    canvas.height = img.height;
+    canvas.width = img.width;
+    var ctx=canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    return canvas.toDataURL();
+  }
+
   CanvasColor.prototype.init = function() {
     var that = this;
     var canvas = document.createElement('canvas');
     canvas.id = guid();
     canvas.width = this.size;
     canvas.height = this.size;
-    document.body.appendChild(canvas);
     var context = canvas.getContext('2d');
     var img = new Image();
     img.crossOrigin = '*';
@@ -41,9 +49,8 @@
       context.drawImage(this, 0, 0, that.size, that.size);
       var data = context.getImageData(0, 0, that.size, that.size).data;
       var res = that.getRGB(data, that.size, that.size);
-      res.imgData = img.src;
+      res.imgData = getBase64(img);
       that.onSuccess(res);
-      canvas.parentNode.removeChild(canvas);
     };
   };
 
