@@ -1,0 +1,39 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Rosario", "Xin Gothic", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+  color: #fff;
+  text-shadow: 1px 2px 1px rgba(255, 255, 255, 0.13);
+}
+
+ul {
+  width: 100%;
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+  width: 320px;
+  margin: 15px auto;
+  border-radius: 2px;
+  padding: 10px;
+  position: relative;
+}
+
+li span {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+li img {
+  display: block;
+  width: 50px;
+  height: 50px;
+  border: 1px solid #fff;
+  border-radius: 1px;
+}
+
+li p {
+  text-align: center;
+}
