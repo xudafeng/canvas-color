@@ -41,7 +41,9 @@
       context.drawImage(this, 0, 0, that.size, that.size);
       var data = context.getImageData(0, 0, that.size, that.size).data;
       var res = that.getRGB(data, that.size, that.size);
-      console.log(data);
+      var result = Object.assign(res, {
+        img: img.src
+      });
       that.onSuccess(res);
       canvas.parentNode.removeChild(canvas);
     };
