@@ -26,11 +26,11 @@
     this.init();
   }
 
-  function getBase64(img) {
-    var canvas = document.createElement('canvas'); 
-    canvas.height = img.height;
-    canvas.width = img.width;
-    var ctx=canvas.getContext('2d');
+  function getBase64(img, width, height) {
+    var canvas = document.createElement('canvas');
+    canvas.height = height;
+    canvas.width = width;
+    var ctx = canvas.getContext('2d');
     ctx.drawImage(img, 0, 0);
     return canvas.toDataURL();
   }
@@ -42,16 +42,25 @@
     canvas.width = this.size;
     canvas.height = this.size;
     var context = canvas.getContext('2d');
-    var img = new Image();
-    img.crossOrigin = '*';
-    img.src = this.image;
-    img.onload = function() {
-      context.drawImage(this, 0, 0, that.size, that.size);
+
+    if (typeof this.image === 'string') {
+      var img = new Image();
+      img.crossOrigin = '*';
+      img.src = this.image;
+      img.onload = function() {
+        context.drawImage(this, 0, 0, that.size, that.size);
+        var data = context.getImageData(0, 0, that.size, that.size).data;
+        var res = that.getRGB(data, that.size, that.size);
+        res.imgData = getBase64(img, this.width, this.height);
+        that.onSuccess(res);
+      };
+    } else {
+      context.drawImage(this.image, 0, 0, that.size, that.size);
       var data = context.getImageData(0, 0, that.size, that.size).data;
       var res = that.getRGB(data, that.size, that.size);
-      res.imgData = getBase64(img);
+      res.imgData = getBase64(this.image, this.image.width, this.image.height);
       that.onSuccess(res);
-    };
+    }
   };
 
   CanvasColor.prototype.getRGB = function(data, width, height) {
