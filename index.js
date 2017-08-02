@@ -19,7 +19,7 @@ items.forEach(item => {
     onSuccess: function(e) {
       html += `
         <li style="background: ${`rgba(${e.red}, ${e.green}, ${e.blue}, 1)`}">
-          <img src="${e.img}">
+          <img src="${e.imgData}">
           <span>
             ${`rgba(${e.red}, ${e.green}, ${e.blue}, 1)`}
           </span>
