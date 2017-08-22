@@ -5,7 +5,6 @@ Makefile
 .jshintrc
 .jshintignore
 coverage/
-index.js
 index.css
 index.html
 *.md
