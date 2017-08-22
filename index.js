@@ -1,5 +1,7 @@
 'use strict';
 
+const CanvasColor = require('./canvas-color');
+
 const items = [
   '9607546',
   '9950313',
