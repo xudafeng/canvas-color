@@ -18,21 +18,21 @@
     });
   };
 
-  function CanvasColor(options) {
-    this.image = options.image;
-    this.size = options.size || 50;
-    this.radius = options.radius || 1;
-    this.onSuccess = options.onSuccess || function() {};
-    this.init();
-  }
-
-  function getBase64(img, width, height) {
+  var getBase64 = function(img, width, height) {
     var canvas = document.createElement('canvas');
     canvas.height = height;
     canvas.width = width;
     var ctx = canvas.getContext('2d');
     ctx.drawImage(img, 0, 0);
     return canvas.toDataURL();
+  };
+
+  function CanvasColor(options) {
+    this.image = options.image;
+    this.size = options.size || 50;
+    this.radius = options.radius || 1;
+    this.onSuccess = options.onSuccess || function() {};
+    this.init();
   }
 
   CanvasColor.prototype.init = function() {
@@ -42,7 +42,6 @@
     canvas.width = this.size;
     canvas.height = this.size;
     var context = canvas.getContext('2d');
-
     if (typeof this.image === 'string') {
       var img = new Image();
       img.crossOrigin = '*';
@@ -69,7 +68,8 @@
     var green = 0;
     var blue = 0;
 
-    data.forEach(function(pixel, index) {
+    Object.keys(data).forEach(function(index) {
+      var pixel = data[index];
       var colorIndex = index % 4;
       switch(colorIndex) {
         case 0:
