@@ -7,7 +7,7 @@ install:
 jshint:
 	@${npm_bin}/jshint .
 test: install
-	@node ./test/render.test.js
+	@echo test
 xvfb:
   export DISPLAY=:99.0 Xvfb :99 -screen 0 1366x768x24 > /dev/null 2>&1 &
 ci:
