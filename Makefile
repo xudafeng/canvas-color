@@ -6,8 +6,6 @@ install:
 	@npm i --force
 jshint:
 	@${npm_bin}/jshint .
-server:
-	@${npm_bin}/startserver -p 8081 -s
 test: install
 	@node ./test/render.test.js
 xvfb:

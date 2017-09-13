@@ -31,6 +31,7 @@
     this.image = options.image;
     this.size = options.size || 50;
     this.radius = options.radius || 1;
+    this.filter = options.filter;
     this.onSuccess = options.onSuccess || function() {};
     this.init();
   }
@@ -42,6 +43,7 @@
     canvas.width = this.size;
     canvas.height = this.size;
     var context = canvas.getContext('2d');
+
     if (typeof this.image === 'string') {
       var img = new Image();
       img.crossOrigin = '*';
@@ -68,21 +70,22 @@
     var green = 0;
     var blue = 0;
 
-    Object.keys(data).forEach(function(index) {
-      var pixel = data[index];
-      var colorIndex = index % 4;
-      switch(colorIndex) {
-        case 0:
-          red += pixel;
-          break;
-        case 1:
-          green += pixel;
-          break;
-        case 2:
-          blue += pixel;
-          break;
+    var keys = Object.keys(data);
+    var total = keys.length;
+
+    for (var i = 0; i < total / 4; i++) {
+      var r = data[i * 4];
+      var g = data[i * 4 + 1];
+      var b = data[i * 4 + 2];
+
+      if (this.filter && this.filter(r, g, b)) {
+        continue;
       }
-    });
+
+      red += r;
+      green += g;
+      blue += b;
+    }
 
     red = red / count;
     green = green / count;
@@ -96,10 +99,12 @@
       lightCount++;
       light += red - lightValue;
     }
+
     if (green > lightValue) {
       lightCount++;
       light += green - lightValue;
     }
+
     if (blue > lightValue) {
       lightCount++;
       light += blue - lightValue;

@@ -15,6 +15,14 @@
         Fork me on Github
       </a>
     </div>
-    <script src="//unpkg.com/canvas-color@latest/build/index.js"></script>
+    <script>
+      var isOnline = location.protocol === 'https:';
+      var head = document.getElementsByTagName('body').item(0);
+      var script = document.createElement('script');
+      script.src = (isOnline ? '//unpkg.com/canvas-color@latest' : '.') + '/build/index.js';
+      script.type = 'text/javascript';
+      script.defer = true;
+      head.appendChild(script);
+    </script>
   </body>
 </html>
