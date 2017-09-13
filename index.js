@@ -45,6 +45,9 @@ img.onload = function() {
     image: this,
     size: 40,
     radius: 1.2,
+    filter: function(r, g, b) {
+      return Math.max(Math.max(r, g), b) - Math.min(Math.min(r, g), b) >= 30;
+    },
     onSuccess: function(e) {
       render(e);
     }
