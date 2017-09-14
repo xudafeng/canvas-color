@@ -39,6 +39,9 @@ items.forEach(item => {
     image: `//avatars1.githubusercontent.com/u/${item}?v=4&s=400`,
     size: 40,
     radius: 1.2,
+    filter: function(r, g, b) {
+      return Math.max(Math.max(r, g), b) - Math.min(Math.min(r, g), b) < 10;
+    },
     onSuccess: function(e) {
       render(e);
     }
@@ -54,7 +57,7 @@ img.onload = function() {
     size: 40,
     radius: 1.2,
     filter: function(r, g, b) {
-      return Math.max(Math.max(r, g), b) - Math.min(Math.min(r, g), b) >= 10;
+      return Math.max(Math.max(r, g), b) - Math.min(Math.min(r, g), b) < 10;
     },
     onSuccess: function(e) {
       render(e);
