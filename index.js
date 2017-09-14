@@ -2,6 +2,14 @@
 
 const CanvasColor = require('./canvas-color');
 
+
+var getUrlParams = function(name) {
+  var results = new RegExp(`[\\?&]${name}=([^&#]*)`).exec(location.href);
+  return results ? results[1] : null;
+};
+
+var image = getUrlParams('image');
+
 const items = [
   '9607546',
   '9950313',
@@ -39,14 +47,14 @@ items.forEach(item => {
 
 var img = new Image();
 img.crossOrigin = '*';
-img.src = `//avatars1.githubusercontent.com/u/9607546?v=4&s=400`;
+img.src = image || `//avatars1.githubusercontent.com/u/9607546?v=4&s=400`;
 img.onload = function() {
   new CanvasColor.CanvasColor({
     image: this,
     size: 40,
     radius: 1.2,
     filter: function(r, g, b) {
-      return Math.max(Math.max(r, g), b) - Math.min(Math.min(r, g), b) >= 30;
+      return Math.max(Math.max(r, g), b) - Math.min(Math.min(r, g), b) >= 10;
     },
     onSuccess: function(e) {
       render(e);
