@@ -64,6 +64,59 @@
     }
   };
 
+  CanvasColor.prototype.RGBtoHSV = function (rgb) {
+    var r = rgb[0],
+      g = rgb[1],
+      b = rgb[2];
+
+    r = r/255, g = g/255, b = b/255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, v = max;
+
+    var d = max - min;
+    s = max == 0 ? 0 : d / max;
+
+    if(max == min){
+      h = 0; // achromatic
+    }else{
+      switch(max){
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+      h /= 6;
+    }
+
+    return [h, s, v];
+  };
+
+
+  CanvasColor.prototype.HSVtoRGB = function (hsv) {
+    // in JS 1.7 use: var [h, s, l] = hsl;
+    var h = hsv[0],
+      s = hsv[1],
+      v = hsv[2],
+
+      r, g, b;
+
+    var i = Math.floor(h * 6);
+    var f = h * 6 - i;
+    var p = v * (1 - s);
+    var q = v * (1 - f * s);
+    var t = v * (1 - (1 - f) * s);
+
+    switch(i % 6){
+      case 0: r = v, g = t, b = p; break;
+      case 1: r = q, g = v, b = p; break;
+      case 2: r = p, g = v, b = t; break;
+      case 3: r = p, g = q, b = v; break;
+      case 4: r = t, g = p, b = v; break;
+      case 5: r = v, g = p, b = q; break;
+    }
+
+    return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+  };
+
   CanvasColor.prototype.getRGB = function(data, width, height) {
     var count = width * height;
     var red = 0;
@@ -91,55 +144,24 @@
     green = green / count;
     blue = blue / count;
 
-    var lightValue = 180;
-    var lightCount = 0;
-    var light = 0;
+    red = red > 255 ? 255 : red;
+    green = green > 255 ? 255 : green;
+    blue = blue > 255 ? 255 : blue;
 
-    if (red > lightValue) {
-      lightCount++;
-      light += red - lightValue;
-    }
+    var hsv = this.RGBtoHSV([red, green, blue])
 
-    if (green > lightValue) {
-      lightCount++;
-      light += green - lightValue;
-    }
+    hsv[1] = 0.5;
+    hsv[2] = 0.5;
 
-    if (blue > lightValue) {
-      lightCount++;
-      light += blue - lightValue;
-    }
-
-    var mColor = Math.max(red, green, blue);
-
-    if (mColor - red > 10 || mColor - green > 10 || mColor - blue > 10) {
-      if (mColor === red) {
-        red *= this.radius;
-      } else if (mColor === green) {
-        green *= this.radius;
-      } else {
-        blue *= this.radius;
-      }
-    }
-
-    if (lightCount >= 2) {
-      var factor = 0.5 * light / (3 * (255 - lightValue));
-
-      if (factor <= 0.5) {
-        factor = 0.5;
-      }
-
-      red *= factor;
-      green *= factor;
-      blue *= factor;
-    }
+    var rgb = this.HSVtoRGB(hsv);
 
     return {
-      red: Math.min(red >> 0, 255),
-      green: Math.min(green >> 0, 255),
-      blue: Math.min(blue >> 0, 255)
+      red: Math.round(rgb[0]),
+      green: Math.round(rgb[1]),
+      blue: Math.round(rgb[2])
     };
   };
 
   exports.CanvasColor = CanvasColor;
 });
+
