@@ -64,25 +64,35 @@
     }
   };
 
-  CanvasColor.prototype.RGBtoHSV = function (rgb) {
-    var r = rgb[0],
-      g = rgb[1],
-      b = rgb[2];
+  CanvasColor.prototype.RGBtoHSV = function(rgb) {
+    var r = rgb[0];
+    var g = rgb[1],
+    var b = rgb[2];
 
-    r = r/255, g = g/255, b = b/255;
-    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    r = r / 255;
+    g = g/255;
+    b = b/255;
+
+    var max = Math.max(r, g, b);
+    var min = Math.min(r, g, b);
     var h, s, v = max;
 
     var d = max - min;
     s = max == 0 ? 0 : d / max;
 
-    if(max == min){
+    if (max === min) {
       h = 0; // achromatic
-    }else{
-      switch(max){
-        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-        case g: h = (b - r) / d + 2; break;
-        case b: h = (r - g) / d + 4; break;
+    } else {
+      switch(max) {
+        case r:
+          h = (g - b) / d + (g < b ? 6 : 0);
+          break;
+        case g:
+          h = (b - r) / d + 2;
+          break;
+        case b:
+          h = (r - g) / d + 4;
+          break;
       }
       h /= 6;
     }
@@ -91,13 +101,14 @@
   };
 
 
-  CanvasColor.prototype.HSVtoRGB = function (hsv) {
+  CanvasColor.prototype.HSVtoRGB = function(hsv) {
     // in JS 1.7 use: var [h, s, l] = hsl;
-    var h = hsv[0],
-      s = hsv[1],
-      v = hsv[2],
-
-      r, g, b;
+    var h = hsv[0];
+    var s = hsv[1];
+    var v = hsv[2];
+    var r;
+    var g;
+    var b;
 
     var i = Math.floor(h * 6);
     var f = h * 6 - i;
@@ -106,12 +117,36 @@
     var t = v * (1 - (1 - f) * s);
 
     switch(i % 6){
-      case 0: r = v, g = t, b = p; break;
-      case 1: r = q, g = v, b = p; break;
-      case 2: r = p, g = v, b = t; break;
-      case 3: r = p, g = q, b = v; break;
-      case 4: r = t, g = p, b = v; break;
-      case 5: r = v, g = p, b = q; break;
+      case 0:
+        r = v;
+        g = t;
+        b = p;
+        break;
+      case 1:
+        r = q;
+        g = v;
+        b = p;
+        break;
+      case 2:
+        r = p;
+        g = v;
+        b = t;
+        break;
+      case 3:
+        r = p;
+        g = q;
+        b = v;
+        break;
+      case 4:
+        r = t;
+        g = p;
+        b = v;
+        break;
+      case 5:
+        r = v;
+        g = p;
+        b = q;
+        break;
     }
 
     return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
@@ -164,4 +199,3 @@
 
   exports.CanvasColor = CanvasColor;
 });
-
