@@ -29,7 +29,7 @@
   "scripts": {
     "prepublish": "npm run build",
     "build": "babel canvas-color.js --out-dir dist/ -D && webpack -p",
-    "server": "webpack-dev-server"
+    "dev": "webpack-dev-server"
   },
   "homepage": "https://github.com/xudafeng/canvas-color",
   "license": "MIT"

@@ -66,7 +66,7 @@
 
   CanvasColor.prototype.RGBtoHSV = function(rgb) {
     var r = rgb[0];
-    var g = rgb[1],
+    var g = rgb[1];
     var b = rgb[2];
 
     r = r / 255;
