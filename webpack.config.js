@@ -1,40 +1,54 @@
+const fs = require('fs');
 const path = require('path');
+
+class WebpackAfterAllPlugin {
+  apply (compiler) {
+    compiler.plugin('done', (compilation) => {
+      setTimeout(() => {
+        fs.writeFileSync(path.join(__dirname, '.ready'), '');
+      }, 1000);
+    });
+  }
+}
+
+const pkg = require('./package');
 
 module.exports = {
   entry: {
-    index: path.resolve(__dirname, './index')
+    index: path.resolve(__dirname, 'index'),
+    [pkg.name]: path.resolve(__dirname, pkg.name)
   },
   output: {
-    path: path.resolve(__dirname, 'build'),
-    publicPath: '/build',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/dist',
     filename: '[name].js'
   },
-  externals: [
-    {
-    }
-  ],
   module: {
     loaders: [
       {
-        test: /\.less$/,
-        loader: 'style!css!less'
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        }
+      },
+      {
+        test: /\.js?$/,
+        exclude: /node_modules/,
+        loader: 'istanbul-instrumenter-loader',
+        query: {
+          esModules: true,
+          coverageVariable: '__macaca_coverage__'
+        }
       },
       {
         test: /\.json$/,
         loader: 'json',
         exclude: /node_modules/
-      },
-      {
-        test: /\.js[x]?$/,
-        exclude: /(node_modules)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['es2015', 'latest'],
-            plugins: []
-          }
-        }
       }
     ]
-  }
+  },
+  plugins: [
+    new WebpackAfterAllPlugin()
+  ]
 };

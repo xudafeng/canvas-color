@@ -2,7 +2,6 @@
 
 const CanvasColor = require('./canvas-color');
 
-
 var getUrlParams = function(name) {
   var results = new RegExp(`[\\?&]${name}=([^&#]*)`).exec(location.href);
   return results ? results[1] : null;
@@ -50,7 +49,7 @@ items.forEach(item => {
 
 var img = new Image();
 img.crossOrigin = '*';
-img.src = image || `//avatars1.githubusercontent.com/u/9607546?v=4&s=400`;
+img.src = image || '//avatars1.githubusercontent.com/u/9607546?v=4&s=400';
 img.onload = function() {
   new CanvasColor.CanvasColor({
     image: this,
