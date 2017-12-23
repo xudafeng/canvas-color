@@ -35,7 +35,7 @@
   ],
   "scripts": {
     "dev": "webpack-dev-server",
-    "dev:test": "NODE_ENV=test webpack-dev-server",
+    "dev:test": "cross-env NODE_ENV=test webpack-dev-server",
     "lint": "eslint --fix . test",
     "serve": "npm run dev:test &",
     "test": "macaca run -d ./test --reporter macaca-reporter",
