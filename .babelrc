@@ -1,4 +1,5 @@
 {
   "presets": ["env", "latest", "stage-2"],
+  "plugins": ["istanbul"],
   "comments": false
 }
