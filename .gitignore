@@ -8,6 +8,5 @@ dist/
 coverage/
 screenshots/
 reports/
-.ready
 *.sw*
 *.un~

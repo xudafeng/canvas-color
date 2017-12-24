@@ -1,15 +1,4 @@
-const fs = require('fs');
 const path = require('path');
-
-class WebpackAfterAllPlugin {
-  apply (compiler) {
-    compiler.plugin('done', (compilation) => {
-      setTimeout(() => {
-        fs.writeFileSync(path.join(__dirname, '.ready'), '');
-      }, 1000);
-    });
-  }
-}
 
 const pkg = require('./package');
 
@@ -38,8 +27,5 @@ module.exports = {
         exclude: /node_modules/
       }
     ]
-  },
-  plugins: [
-    new WebpackAfterAllPlugin()
-  ]
+  }
 };
