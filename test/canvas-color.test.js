@@ -1,9 +1,13 @@
 'use strict';
 
 import {
+  webpackHelper
+} from 'macaca-wd';
+
+const {
   driver,
   BASE_URL
-} from './helper';
+} = webpackHelper;
 
 describe('test/canvas-color.test.js', () => {
 
