@@ -8,7 +8,7 @@
   "main": "./dist/canvas-color.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/xudafeng/canvas-color.git"
+    "url": "git@github.com:xudafeng/canvas-color.git"
   },
   "dependencies": {},
   "devDependencies": {
@@ -37,7 +37,7 @@
     "dev:test": "cross-env NODE_ENV=test webpack-dev-server",
     "lint": "eslint --fix . test",
     "serve": "npm run dev:test &",
-    "test": "macaca run -d ./test --reporter macaca-reporter",
+    "test": "macaca run -d ./test",
     "prepublish": "npm run build",
     "build": "cross-env NODE_ENV=production webpack -p --progress --hide-modules",
     "ci": "npm run lint && npm run serve && npm run test",
